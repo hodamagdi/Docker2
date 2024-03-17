@@ -1,0 +1,52 @@
+
+Solution : 
+
+docker-compose up -d
+
+
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: Hoda@
+      MYSQL_PASSWORD: 
+
+ q1: wordpress:
+    image: wordpress:latest
+    container_name: wordpress_container
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_NAME: wordpress_db
+      WORDPRESS_DB_USER: wordpress_user
+      WORDPRESS_DB_PASSWORD: wordpress_password
+
+ q2: postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: odoo_user
+      POSTGRES_PASSWORD: odoo_password
+      POSTGRES_DB: odoo_db
+
+  odoo:
+    image: odoo:latest
+    container_name: odoo_container
+    restart: always
+    ports:
+      - "8069:8069"
+    environment:
+      POSTGRES_USER: odoo_user
+      POSTGRES_PASSWORD: odoo_password
+      POSTGRES_DB: odoo_db
+      PGHOST: postgres
+      PGPORT: 5432
